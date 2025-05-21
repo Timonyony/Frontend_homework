@@ -194,9 +194,6 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 });
 
 function disappear(element) {
-    const sound = document.getElementById('coinSound');
-    sound.currentTime = 0;
-    sound.play();
     element.classList.add('hidden');
     setTimeout(() => {
         element.classList.remove('hidden');
