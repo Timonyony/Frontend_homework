@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    document.getElementById('contactPopupForm').addEventListener('submit', function(e) {
+    document.getElementById('formPopup').addEventListener('submit', function(e) {
         e.preventDefault();
         const isNameValid = validatePopupName();
         const isEmailValid = validatePopupEmail();
