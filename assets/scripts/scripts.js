@@ -176,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const nameRegex = /^[а-яА-ЯёЁ\s]+$/;
             
         if (!name) {
+            clearError('messagePopup');
             showError('namePopup', 'Введите имя');
             return false;
         }
@@ -195,6 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         
         if (!email) {
+            clearError('messagePopup');
             showError('emailPopup', 'Введите почту');
             return false;
         }
@@ -214,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
         
         if (!phone) {
+            clearError('messagePopup');
             showError('phonePopup', 'Введите телефон');
             return false;
         }
@@ -233,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageRegex = /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]+$/;
         
         if (!text) {
+            clearError('messagePopup');
             showError('messagePopup', 'Введите сообщение');
             return false;
         }
@@ -321,6 +325,7 @@ function validateName() {
     const nameRegex = /^[а-яА-ЯёЁ\s]+$/;
         
     if (!name) {
+        clearError('messagePopup');
         showError('namePopup', 'Введите имя');
         return false;
     }
@@ -340,6 +345,7 @@ function validateEmail() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
     if (!email) {
+        clearError('messagePopup');
         showError('emailPopup', 'Введите почту');
         return false;
     }
@@ -359,6 +365,7 @@ function validatePhone() {
     const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
     
     if (!phone) {
+        clearError('messagePopup');
         showError('phonePopup', 'Введите телефон');
         return false;
     }
@@ -378,6 +385,7 @@ function validateMessage() {
     const messageRegex = /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]+$/;
     
     if (!text) {
+        clearError('messagePopup');
         showError('messagePopup', 'Введите сообщение');
         return false;
     }
