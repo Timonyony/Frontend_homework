@@ -175,8 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const errorElement = document.getElementById('namePopup-error');
         const nameRegex = /^[а-яА-ЯёЁ\s]+$/;
             
-        if (name == '') {
-            clearError('messagePopup');
+        if (name === '') {
             showError('namePopup', 'Введите имя');
             return false;
         }
@@ -195,8 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const errorElement = document.getElementById('emailPopup-error');
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         
-        if (email == '') {
-            clearError('messagePopup');
+        if (email === '') {
             showError('emailPopup', 'Введите почту');
             return false;
         }
@@ -215,8 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const errorElement = document.getElementById('phonePopup-error');
         const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
         
-        if (phone == '') {
-            clearError('messagePopup');
+        if (phone === '') {
             showError('phonePopup', 'Введите телефон');
             return false;
         }
@@ -235,8 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const errorElement = document.getElementById('messagePopup-error');
         const messageRegex = /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]+$/;
         
-        if (text == '') {
-            clearError('messagePopup');
+        if (text === '') {
             showError('messagePopup', 'Введите сообщение');
             return false;
         }
@@ -324,9 +320,8 @@ function validateName() {
     const errorElement = document.getElementById('name-error');
     const nameRegex = /^[а-яА-ЯёЁ\s]+$/;
         
-    if (name == '') {
-        clearError('messagePopup');
-        showError('namePopup', 'Введите имя');
+    if (name === '') {
+        showError('name', 'Введите имя');
         return false;
     }
         
@@ -344,9 +339,8 @@ function validateEmail() {
     const errorElement = document.getElementById('email-error');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
-    if (email == '') {
-        clearError('messagePopup');
-        showError('emailPopup', 'Введите почту');
+    if (email === '') {
+        showError('email', 'Введите почту');
         return false;
     }
         
@@ -364,9 +358,8 @@ function validatePhone() {
     const errorElement = document.getElementById('phone-error');
     const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
     
-    if (phone == '') {
-        clearError('messagePopup');
-        showError('phonePopup', 'Введите телефон');
+    if (phone === '') {
+        showError('phone', 'Введите телефон');
         return false;
     }
     
@@ -384,9 +377,8 @@ function validateMessage() {
     const errorElement = document.getElementById('message-error');
     const messageRegex = /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]+$/;
     
-    if (text == '') {
-        clearError('messagePopup');
-        showError('messagePopup', 'Введите сообщение');
+    if (text === '') {
+        showError('message', 'Введите сообщение');
         return false;
     }
         
