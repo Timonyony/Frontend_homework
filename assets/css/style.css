@@ -352,6 +352,15 @@ html {
     border-left: 5px solid var(--secondary-color);
 }
 
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+    height: 18px;
+}
+.input-error {
+    border: 1px solid red;
+}
 .contact-section {
     background-color: #f1f1f1;
 }

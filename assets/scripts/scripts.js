@@ -127,72 +127,6 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const text = document.getElementById('message').value.trim();
-    const button = document.getElementById('submit-btn');
-    
-    const nameRegex = /^[а-яА-ЯёЁ\s]+$/;
-    if (!nameRegex.test(name)) {
-        alert('Имя должно содержать только русские буквы');
-        return;
-    }
-    
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        alert('Пожалуйста, введите корректный email');
-        return;
-    }
-    
-    const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
-    if (phone && !phoneRegex.test(phone)) {
-        alert('Телефон должен быть в формате: +7 (123) 456-78-90');
-        return;
-    }
-    
-    const messageRegex = /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]+$/;
-    if (!messageRegex.test(text)) {
-        alert('Сообщение должно содержать только русские или английские символы');
-        return;
-    }
-
-    button.disabled = true;
-    button.textContent = 'Отправляем...';
-    button.style.cursor = 'wait';
-
-    emailjs.init('ELu58zIP2zcP9-epN');
-    emailjs.sendForm('service_gvi3xn2', 'template_ljbhuun', this)
-    .then(() => {
-        button.textContent = 'Успешно отправлено!';
-        button.classList.remove('submit-button')
-        button.classList.add('success-button');
-        button.style.cursor = 'default';
-        setTimeout(() => {
-            button.disabled = false;
-            button.textContent = 'Отправить';
-            button.classList.remove('success-button');
-            button.classList.add('submit-button');
-            button.style.cursor = 'pointer';
-        }, 3000);
-    })
-    .catch(() => {
-        button.textContent = 'Ошибка при отправлении!';
-        button.classList.remove('submit-button')
-        button.classList.add('error-button');
-        button.style.cursor = 'default';
-        setTimeout(() => {
-            button.disabled = false;
-            button.textContent = 'Отправить';
-            button.classList.remove('error-button');
-            button.classList.add('submit-button');
-            button.style.cursor = 'pointer';
-        }, 3000);
-    }); 
-});
-
 function disappear(element) {
     element.classList.add('hidden');
     setTimeout(() => {
@@ -230,39 +164,100 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = '';
         }
     });
-    
-    document.getElementById('contactFormPopup').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const name = document.getElementById('namePopup').value.trim();
-        const email = document.getElementById('emailPopup').value.trim();
-        const phone = document.getElementById('phonePopup').value.trim();
-        const text = document.getElementById('messagePopup').value.trim();
-        const button = document.getElementById('submit-btn-popup');
-        
-        const nameRegex = /^[а-яА-ЯёЁ\s]+$/;
-        if (!nameRegex.test(name)) {
-            alert('Имя должно содержать только русские буквы');
-            return;
-        }
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert('Пожалуйста, введите корректный email');
-            return;
-        }
-        
-        const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
-        if (phone && !phoneRegex.test(phone)) {
-            alert('Телефон должен быть в формате: +7 (123) 456-78-90');
-            return;
-        }
-        
-        const messageRegex = /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]+$/;
-        if (!messageRegex.test(text)) {
-            alert('Сообщение должно содержать только русские или английские символы');
-            return;
-        }
 
+    document.getElementById('namePopup').addEventListener('input', validatePopupName);
+    document.getElementById('emailPopup').addEventListener('input', validatePopupEmail);
+    document.getElementById('phonePopup').addEventListener('input', validatePopupPhone);
+    document.getElementById('messagePopup').addEventListener('input', validatePopupMessage);
+
+    function validatePopupName() {
+        const name = document.getElementById('namePopup').value.trim();
+        const errorElement = document.getElementById('namePopup-error');
+        const nameRegex = /^[а-яА-ЯёЁ\s]+$/;
+            
+        if (!name) {
+            clearError('namePopup');
+            return false;
+        }
+            
+        if (!nameRegex.test(name)) {
+            showError('namePopup', 'Имя должно содержать только русские буквы');
+            return false;
+        } else {
+            clearError('namePopup');
+            return true;
+        }
+    }
+
+    function validatePopupEmail() {
+        const email = document.getElementById('emailPopup').value.trim();
+        const errorElement = document.getElementById('emailPopup-error');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!email) {
+            clearError('emailPopup');
+            return false;
+        }
+            
+        if (!emailRegex.test(email)) {
+            showError('emailPopup', 'Пожалуйста, введите корректный email');
+            return false;
+        } else {
+            clearError('emailPopup');
+            return true;
+        }
+    }
+        
+    function validatePopupPhone() {
+        const phone = document.getElementById('phonePopup').value.trim();
+        const errorElement = document.getElementById('phonePopup-error');
+        const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
+        
+        if (!phone) {
+            clearError('phonePopup');
+            return true;
+        }
+        
+        if (!phoneRegex.test(phone)) {
+            showError('phonePopup', 'Телефон должен быть в формате: +7 (123) 456-78-90');
+            return false;
+        } else {
+            clearError('phonePopup');
+            return true;
+        }
+    }
+        
+    function validatePopupMessage() {
+        const text = document.getElementById('messagePopup').value.trim();
+        const errorElement = document.getElementById('messagePopup-error');
+        const messageRegex = /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]+$/;
+        
+        if (!text) {
+            clearError('messagePopup');
+            return false;
+        }
+            
+        if (!messageRegex.test(text)) {
+            showError('messagePopup', 'Сообщение должно содержать только русские или английские символы');
+            return false;
+        } else {
+            clearError('messagePopup');
+            return true;
+        }
+    }
+
+    document.getElementById('contactPopupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const isNameValid = validatePopupName();
+        const isEmailValid = validatePopupEmail();
+        const isPhoneValid = validatePopupPhone();
+        const isMessageValid = validatePopupMessage();
+        
+        if (!isNameValid || !isEmailValid || !isPhoneValid || !isMessageValid) {
+            return;
+        }
+            
+        const button = document.getElementById('submit-btn-popup');
         button.disabled = true;
         button.textContent = 'Отправляем...';
         button.style.cursor = 'wait';
@@ -280,9 +275,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 button.classList.remove('success-button');
                 button.classList.add('submit-button');
                 button.style.cursor = 'pointer';
-                formPopup.classList.remove('show');
-                document.body.style.overflow = '';
-                this.reset();
             }, 3000);
         })
         .catch(() => {
@@ -299,4 +291,148 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 3000);
         }); 
     });
+});
+
+
+function showError(fieldId, message) {
+    const inputElement = document.getElementById(fieldId);
+    const errorElement = document.getElementById(`${fieldId}-error`);
+        
+    inputElement.classList.add('input-error');
+    errorElement.textContent = message;
+}
+    
+function clearError(fieldId) {
+    const inputElement = document.getElementById(fieldId);
+    const errorElement = document.getElementById(`${fieldId}-error`);
+     
+    inputElement.classList.remove('input-error');
+    errorElement.textContent = '';
+}
+
+document.getElementById('name').addEventListener('input', validateName);
+document.getElementById('email').addEventListener('input', validateEmail);
+document.getElementById('phone').addEventListener('input', validatePhone);
+document.getElementById('message').addEventListener('input', validateMessage);
+
+function validateName() {
+    const name = document.getElementById('name').value.trim();
+    const errorElement = document.getElementById('name-error');
+    const nameRegex = /^[а-яА-ЯёЁ\s]+$/;
+        
+    if (!name) {
+        clearError('name');
+        return false;
+    }
+        
+    if (!nameRegex.test(name)) {
+        showError('name', 'Имя должно содержать только русские буквы');
+        return false;
+    } else {
+        clearError('name');
+        return true;
+    }
+}
+    
+function validateEmail() {
+    const email = document.getElementById('email').value.trim();
+    const errorElement = document.getElementById('email-error');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!email) {
+        clearError('email');
+        return false;
+    }
+        
+    if (!emailRegex.test(email)) {
+        showError('email', 'Пожалуйста, введите корректный email');
+        return false;
+    } else {
+        clearError('email');
+        return true;
+    }
+}
+    
+function validatePhone() {
+    const phone = document.getElementById('phone').value.trim();
+    const errorElement = document.getElementById('phone-error');
+    const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
+    
+    if (!phone) {
+        clearError('phone');
+        return true;
+    }
+    
+    if (!phoneRegex.test(phone)) {
+        showError('phone', 'Телефон должен быть в формате: +7 (123) 456-78-90');
+        return false;
+    } else {
+        clearError('phone');
+        return true;
+    }
+}
+    
+function validateMessage() {
+    const text = document.getElementById('message').value.trim();
+    const errorElement = document.getElementById('message-error');
+    const messageRegex = /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]+$/;
+    
+    if (!text) {
+        clearError('message');
+        return false;
+    }
+        
+    if (!messageRegex.test(text)) {
+        showError('message', 'Сообщение должно содержать только русские или английские символы');
+        return false;
+    } else {
+        clearError('message');
+        return true;
+    }
+}
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const isNameValid = validateName();
+    const isEmailValid = validateEmail();
+    const isPhoneValid = validatePhone();
+    const isMessageValid = validateMessage();
+      
+    if (!isNameValid || !isEmailValid || !isPhoneValid || !isMessageValid) {
+        return;
+    }
+        
+    const button = document.getElementById('submit-btn');
+    button.disabled = true;
+    button.textContent = 'Отправляем...';
+    button.style.cursor = 'wait';
+
+    emailjs.init('ELu58zIP2zcP9-epN');
+    emailjs.sendForm('service_gvi3xn2', 'template_ljbhuun', this)
+    .then(() => {
+        button.textContent = 'Успешно отправлено!';
+        button.classList.remove('submit-button')
+        button.classList.add('success-button');
+        button.style.cursor = 'default';
+        setTimeout(() => {
+            button.disabled = false;
+            button.textContent = 'Отправить';
+            button.classList.remove('success-button');
+            button.classList.add('submit-button');
+            button.style.cursor = 'pointer';
+        }, 3000);
+    })
+    .catch(() => {
+        button.textContent = 'Ошибка при отправлении!';
+        button.classList.remove('submit-button')
+        button.classList.add('error-button');
+        button.style.cursor = 'default';
+        setTimeout(() => {
+            button.disabled = false;
+            button.textContent = 'Отправить';
+            button.classList.remove('error-button');
+            button.classList.add('submit-button');
+            button.style.cursor = 'pointer';
+        }, 3000);
+    }); 
 });
