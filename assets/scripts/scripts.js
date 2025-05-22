@@ -74,12 +74,12 @@ const nextArrow = document.getElementById('nextArrow');
     }
 });
 
+//переписал на куки
 document.addEventListener('DOMContentLoaded', function() {
     const popup = document.getElementById('popup-message');
     const closeBtn = popup.querySelector('.popup-close-btn');        
-    const isPopupClosed = localStorage.getItem('popupClosed');
-    
-    if (!isPopupClosed) {
+
+    if (!document.cookie.includes('popupClosed')) {
         setTimeout(function() {
             popup.style.display = 'block';
         }, 30000);
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     closeBtn.addEventListener('click', function() {
         popup.style.display = 'none';
-        localStorage.setItem('popupClosed', 'true');
+        document.cookie = 'popupClosed; max-age=864000';
     });
 });
 
